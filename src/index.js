@@ -1,36 +1,45 @@
-// Get the React object from the 'react' library
-import React from 'react';
-// Get the ReactDOM object from the 'react-dom' library
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// Get the YTSearch function from the 'youtube-api-search' directory
 import YTSearch from 'youtube-api-search';
-
-// Get the SearchBar function (component) from the search_bar.js file
-// Have to have 'export default SearchBar;' in search_bar.js for this to work.
-// ./ is the current working directory
 import SearchBar from './components/search_bar';
 
 // YouTube API key (allows you to embed youtube in your app)
 const API_KEY = 'AIzaSyD5gCn_C_F6zPGjQylMUYIVvilXXbmeHa8';
 
-// Does a youtube search for 'surfboards'. Returns 5 results (why just 5?)
-// as objects (JSON?).
-// Bit like a jQuery Get function i.e. pass the function some configuration and
-// a callback function that does something.
-YTSearch({key: API_KEY, term: 'surfboards'}, function(data) {
-  console.log(data);
-});
+// When the App first boots up and we get an instance of App on the screen,
+// the constructor will run immediately (because a new instance of App has
+// been created)...and that will immediately kick off a search with the term
+// 'surfboards'.
+class App extends Component {
+  // constructor method
+  constructor(props) {
+    super(props)
 
-// Create a new component. This component should produce some HTML.
-const App = () => {
-  return (
-    <div>
-      <SearchBar />
-    </div>
-  );
+    this.state = { videos: [] };
+
+    // Does a youtube search for 'surfboards'. The YTSearch method returns an
+    // array of objects (one per video) which it passes to the videos parameter.
+    // The parameter could be called anthing. 'videos' is most descriptive.
+    // We can then use this.setState in the callback function to assign the array
+    // as the value of the videos property on the state object.
+    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
+      // this.setState({ videos: videos});
+      // In ES6, when both key and value are the same string, can condense it like this.
+      this.setState({ videos });
+
+    });
+  }
+  // render method
+  render() {
+    return (
+      <div>
+        <SearchBar />
+      </div>
+    );
+  }
 }
 
 // Take this component's generated HTML and put it on the page (in the DOM).
 // <app /> is an instance of the class App (called a component). To be an
-// instance it needs to be wrapped in JSX tags.
+// instance it needs to be wrapped in JSX tags like this < />.
 ReactDOM.render(<App />, document.querySelector('.container'));
