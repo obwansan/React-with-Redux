@@ -12,18 +12,22 @@ class SearchBar extends Component
 
     // The class's state is a JS object containing properties. When the user
     // enters some text it will be stored as the value of the term property
-    this.state = { term: '' };
+    this.state = { term: 'Starting Value' };
   }
-  // The SearchBar class's render method
+  // Setting the value of input like this makes the component a 'controlled component'.
+  // Not sure how this works though...The value of input is set to be the value of the
+  // term property in the state object, but why doesn't typing change the value of the
+  // input? The event handler function is still called when there's an event on the
+  // input element (i.e. you type), so the value of the term property should be changed
+  // to whatever you type...and therfore the value of this.state.term is updated When
+  // the component rerenders (which it does every time the event handler is called).
   render() {
-    // When the input element's value changes, the ES6 function runs (because it's our
-    // event handler). The component's state (this.state.term) is set with the
-    // new value of the input element. Whenever the event handler function is
-    // called it causes the component to rerender and push the udated JSX to the DOM.
     return (
       <div>
-        <input onChange={event => this.setState({ term: event.target.value })}/>
-        Value of the input: {this.state.term}
+        <input
+          value={this.state.term}
+          onChange={event => this.setState({ term: event.target.value })}
+          />
       </div>
     );
   }
