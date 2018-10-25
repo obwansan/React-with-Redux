@@ -5,23 +5,22 @@ import React, {Component} from 'react';
 // class SearchBar extends React.Component
 class SearchBar extends Component
 {
-  // This is a render method even though it doesn't use the normal ES6 class
-  // method syntax i.e. render: function() {}
-  render() {
-    // Every interactive HTML element emits a 'change' event when interacted with.
-    // The 'onChange' React defined keyword accesses that event.
-    // Here the prop (property) onChange has the value of whatever onInputChange does.
-    // The onInputChange event handler is passed to the element whose events we want it to handle!
-    return <input onChange={this.onInputChange}/>;
-    }
+  constructor(props) {
+    // The super function(?) allows you to access methods in the class's
+    // parent class, i.e. Component. 'super' means 'above'!
+    super(props);
 
-  // Event handler method naming convention: 'on' or 'handle' + Name of element + event
-  // Pass the event handler the event object, which allows us to access the value entered
-  // in the input element.
-  onInputChange(event) {
-    console.log(event);
+    // The class's state is a JS object containing properties. When the user
+    // enters some text it will be stored as the value of the term property
+    this.state = { term: '' };
   }
+
+  render() {
+    // An ES6 style anonymous function. event is the argument.
+    // If the function is on one line you don't need curly braces and
+    // don't need parentheses around the parameter.
+    return <input onChange={event => console.log(event.target.value)}/>;
+    }
 }
 
-// Exports the SearchBar component. Allows it to be imported by other files.
 export default SearchBar;
