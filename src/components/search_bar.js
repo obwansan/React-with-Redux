@@ -14,13 +14,19 @@ class SearchBar extends Component
     // enters some text it will be stored as the value of the term property
     this.state = { term: '' };
   }
-
+  // The SearchBar class's render method
   render() {
-    // An ES6 style anonymous function. event is the argument.
-    // If the function is on one line you don't need curly braces and
-    // don't need parentheses around the parameter.
-    return <input onChange={event => console.log(event.target.value)}/>;
-    }
+    // When the input element's value changes, the ES6 function runs (because it's our
+    // event handler). The component's state (this.state.term) is set with the
+    // new value of the input element. Whenever the event handler function is
+    // called it causes the component to rerender and push the udated JSX to the DOM.
+    return (
+      <div>
+        <input onChange={event => this.setState({ term: event.target.value })}/>
+        Value of the input: {this.state.term}
+      </div>
+    );
+  }
 }
 
 export default SearchBar;
