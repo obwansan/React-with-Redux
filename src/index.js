@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
+import VideoList from './components/video_list';
 
 // YouTube API key (allows you to embed youtube in your app)
 const API_KEY = 'AIzaSyD5gCn_C_F6zPGjQylMUYIVvilXXbmeHa8';
@@ -29,11 +30,20 @@ class App extends Component {
 
     });
   }
-  // render method
+  // videos={this.state.videos} is an example of 'passing props' in React.
+  // We're passing prop 'videos' to VideoList.
+  // This passes the array of video objects from App's state to the VideoList
+  // component.
+  // Whenever App rerenders and the state is reset (e.g. due to a new user search),
+  // VideoList will get the updated videos value (array of objects) from App's
+  // state object.
+  // videos here is passed to VideoList as an object called 'props' (see notes on
+  // VideoList).
   render() {
     return (
       <div>
         <SearchBar />
+        <VideoList videos={this.state.videos} />
       </div>
     );
   }

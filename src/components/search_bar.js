@@ -12,7 +12,7 @@ class SearchBar extends Component
 
     // The class's state is a JS object containing properties. When the user
     // enters some text it will be stored as the value of the term property
-    this.state = { term: 'Starting Value' };
+    this.state = { term: '' };
   }
   // Setting the value of input like this makes the component a 'controlled component'.
   // Not sure how this works though...The value of input is set to be the value of the
