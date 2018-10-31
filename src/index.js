@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail'
 
 // YouTube API key (allows you to embed youtube in your app)
 const API_KEY = 'AIzaSyD5gCn_C_F6zPGjQylMUYIVvilXXbmeHa8';
@@ -26,7 +27,7 @@ class App extends Component {
     YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
       // this.setState({ videos: videos});
       // In ES6, when both key and value are the same string, can condense the
-      // statement like this.
+      // statement like this:
       this.setState({ videos });
 
     });
@@ -44,6 +45,7 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
+        <VideoDetail video={this.state.videos[0]} />
         <VideoList videos={this.state.videos} />
       </div>
     );

@@ -1,8 +1,9 @@
 import React from 'react';
 
 const VideoListItem = ({video}) => {
-  // {video} above is the ES6 version of doing "const video = props.video;"
-  // console.log(video);
+  // {video} above is the ES6 version of passing the 'props' argument and
+  // having "const video = props.video;" in the function.
+
   // video is the object returned from youtube (5 of them in an array). We access
   // the url using this nested objects path.
   const imageUrl = video.snippet.thumbnails.default.url;
