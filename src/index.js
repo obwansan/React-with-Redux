@@ -20,12 +20,13 @@ class App extends Component {
 
     // Does a youtube search for 'surfboards'. The YTSearch method returns an
     // array of objects (one per video) which it passes to the videos parameter.
-    // The parameter could be called anthing. 'videos' is most descriptive.
+    // The parameter could be called anthing, but 'videos' is most descriptive.
     // We can then use this.setState in the callback function to assign the array
     // as the value of the videos property on the state object.
     YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
       // this.setState({ videos: videos});
-      // In ES6, when both key and value are the same string, can condense it like this.
+      // In ES6, when both key and value are the same string, can condense the
+      // statement like this.
       this.setState({ videos });
 
     });
