@@ -23,7 +23,7 @@ class SearchBar extends Component
   // the component rerenders (which it does every time the event handler is called).
   render() {
     return (
-      <div>
+      <div className="search-bar">
         <input
           value={this.state.term}
           onChange={event => this.setState({ term: event.target.value })}

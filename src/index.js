@@ -17,19 +17,26 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { videos: [] };
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
 
-    // Does a youtube search for 'surfboards'. The YTSearch method returns an
-    // array of objects (one per video) which it passes to the videos parameter.
-    // The parameter could be called anthing, but 'videos' is most descriptive.
-    // We can then use this.setState in the callback function to assign the array
-    // as the value of the videos property on the state object.
+    // App boots up. Videos is an empty array and selectedVideo is null.
+    // We go into VideoDetail (in the render method). VideoDetail isn't provided
+    // a video so it's going to show the 'Loading...' message. At the same time
+    // we kick off a request to get a bunch of videos (i.e. YTSearch()). When
+    // that search completes, the returned video objects are passed to
+    // this.state.videos empty array, and the first video object is assigned to
+    // this.state.selectedVideo.
+    // Because we're setting state, the component is caused to rerender, which means
+    // VideoDetail will be rerendered with video={this.state.selectedVideo}, and
+    // the selectedVideo property now holds the first video object in the array.
     YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
-      // this.setState({ videos: videos});
-      // In ES6, when both key and value are the same string, can condense the
-      // statement like this:
-      this.setState({ videos });
-
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
     });
   }
   // videos={this.state.videos} is an example of 'passing props' in React.
@@ -45,8 +52,15 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
-        <VideoDetail video={this.state.videos[0]} />
-        <VideoList videos={this.state.videos} />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList
+          // Passing a function called onVideoSelect that takes a selectedVideo
+          // and assigns it as the value on this.state's selectedVideo property.
+          // IOWs, it updates Apps state with the currently selected video.
+          // Program flow: pass onVideoSelect as a prop to VideoList...
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos}
+        />
       </div>
     );
   }

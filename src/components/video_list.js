@@ -21,8 +21,17 @@ const VideoList = (props) => {
   const videoItems = props.videos.map((video) => {
     // Every li should have a unique key. The etag is a property on the video
     // object (see it in the console).
-    return <VideoListItem key={video.etag} video={video} />
-  })
+    // onVideoSelect={props.onVideoSelect} - Taking the prop (the callback function
+    // onVideoSelect) that's passed to VideoList in App and passing it down into
+    // VideoListItem.
+    // Program flow: VideoList passes onVideoSelect to VideoListItem...
+    return (
+      <VideoListItem
+        onVideoSelect={props.onVideoSelect}
+        key={video.etag}
+        video={video} />
+      );
+  });
 
   // React will recognise that {videoItems} is an array of VideoListItems (i.e.
   // JSX <li>s and will render them within the <ul>.)
