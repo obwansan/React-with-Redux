@@ -14,22 +14,30 @@ class SearchBar extends Component
     // enters some text it will be stored as the value of the term property
     this.state = { term: '' };
   }
-  // Setting the value of input like this makes the component a 'controlled component'.
-  // Not sure how this works though...The value of input is set to be the value of the
-  // term property in the state object, but why doesn't typing change the value of the
-  // input? The event handler function is still called when there's an event on the
-  // input element (i.e. you type), so the value of the term property should be changed
-  // to whatever you type...and therfore the value of this.state.term is updated When
-  // the component rerenders (which it does every time the event handler is called).
+  // App's render method renders <SearchBar />. Class SearchBar in turn renders
+  // the constituents of SearchBar (div and input elements). The input element
+  // has the prop onChange which calls onInputChange, passing it the entered
+  // search term...
   render() {
     return (
       <div className="search-bar">
         <input
           value={this.state.term}
-          onChange={event => this.setState({ term: event.target.value })}
+          onChange={event => this.onInputChange(event.target.value)}
           />
       </div>
     );
+  }
+
+  // onInputChange then (1) sets the term property's value on SearchBars state and
+  // (2) passes the search term to onSearchTermChange (a function passed to <SearchBar />
+  //  as a prop, and therefore a method on the props object passed to the constructor).
+  //  onSearchTermChange passes the search term into this.videoSearch(), videoSearch()
+  //  does the YouTube search, which gets the video objects, stores them in state as an
+  //  array, and sets the selectedVideo...which can then be used by VideList and VideoDetail.
+  onInputChange(term) {
+    this.setState({term});
+    this.props.onSearchTermChange(term);
   }
 }
 

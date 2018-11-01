@@ -22,36 +22,32 @@ class App extends Component {
       selectedVideo: null
     };
 
-    // App boots up. Videos is an empty array and selectedVideo is null.
-    // We go into VideoDetail (in the render method). VideoDetail isn't provided
-    // a video so it's going to show the 'Loading...' message. At the same time
-    // we kick off a request to get a bunch of videos (i.e. YTSearch()). When
-    // that search completes, the returned video objects are passed to
-    // this.state.videos empty array, and the first video object is assigned to
-    // this.state.selectedVideo.
-    // Because we're setting state, the component is caused to rerender, which means
-    // VideoDetail will be rerendered with video={this.state.selectedVideo}, and
-    // the selectedVideo property now holds the first video object in the array.
-    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
+    // When the App first loads, do an initial (default) search for 'surfboards'.
+    this.videoSearch('surfboards');
+  }
+  // The searchbar method. Moved the YTSearch method into it as it's the code
+  // we need and avoids duplication.
+  videoSearch(term) {
+    YTSearch({key: API_KEY, term: term}, (videos) => {
       this.setState({
         videos: videos,
         selectedVideo: videos[0]
       });
     });
   }
-  // videos={this.state.videos} is an example of 'passing props' in React.
-  // We're passing prop 'videos' to VideoList.
-  // This passes the array of video objects from App's state to the VideoList
-  // component.
-  // Whenever App rerenders and the state is reset (e.g. due to a new user search),
-  // VideoList will get the updated videos value (array of objects) from App's
-  // state object.
-  // videos here is passed to VideoList as an object called 'props' (see notes on
-  // VideoList).
+
+  // onSearchTermChange is a prop passed to <SearchBar />. A prop seems to be a
+  // kind of variable that can hold a value or a callback function.
+  //
+  // When a user enters a search term, <SearchBar/> calls onSearchTermChange,
+  // passing it the entered search term. onSearchTermChange passes the search
+  // term into this.videoSearch(), videoSearch() does the YouTube search, which
+  // gets the video objects, stores them in state as an array, and sets the
+  // selectedVideo...which can then be used by VideList and VideoDetail.
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           // Passing a function called onVideoSelect that takes a selectedVideo
