@@ -25,8 +25,7 @@ class App extends Component {
     // When the App first loads, do an initial (default) search for 'surfboards'.
     this.videoSearch('surfboards');
   }
-  // The searchbar method. Moved the YTSearch method into it as it's the code
-  // we need and avoids duplication.
+  // The ES6 class syntax requires method declarations in a short form (i.e. no 'function' keyword).
   videoSearch(term) {
     YTSearch({key: API_KEY, term: term}, (videos) => {
       this.setState({
